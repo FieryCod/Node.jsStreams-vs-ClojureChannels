@@ -1,0 +1,14 @@
+{
+  "name": "streams-vs-channels",
+  "version": "0.0.1",
+  "license": "MIT",
+  "scripts": {
+    "fig": "node target/dev/figwheel_exec.js",
+    "prod": "node target/prod/streams_vs_channels.js"
+  },
+  "devDependencies": {
+    "@cljs-oss/module-deps": "^1.1.1",
+    "nodemon": "^1.18.0",
+    "ws": "^5.2.2"
+  }
+}

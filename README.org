@@ -1,0 +1,39 @@
+* Streams vs Channels
+
+
+** Task
+The task is to take all numbers from the ~seeds.file~ and process it as follows.
+
+1. Split the dataset to four datasets (Task #1)
+
+- fizz-numbers     -- A (store the count of the coll)
+- buzz-numbers     -- B (store the count of the coll)
+- fizzbuzz-numbers -- C (store the count of the coll)
+- other numbers    -- D (store the count of the coll)
+
+2. Then these four datasets should be processed with the lowest possible memory allocation: (Task #2)
+|---------+--------------------------------------------------------|
+| Dataset | Processing formula                                     |
+|---------+--------------------------------------------------------|
+| A       | Group per 3 numbers e.g '(3 6 9) -> A1                 |
+| B       | Group per 5 numbers e.g '(5 10 15 20 25) -> B1         |
+| C       | Group per 15 numbers e.g '(15 30 45 60 75 90...) -> C1 |
+| D       | Do not group                                           |
+|---------+--------------------------------------------------------|
+
+3. For each A1, B1, C1 process group one by one and for each create a string ~Group x: ${GroupContent}~.
+   The new datasets should consist of those strings. (Task #3)
+
+|---------+----------------------------------------------------|
+| Dataset | Processing formula                                 |
+|---------+----------------------------------------------------|
+| A1      | "Group 1: '(3 6 9)\n", "Group 2: '(9 12 18)" -> A2 |
+| B1      | Same as above -> B2                                |
+| C1      | Same as above -> C2                                |
+| D1      | As you can see that dataset is not processed -> D1 |
+|---------+----------------------------------------------------|
+
+4. Create 4 files for dataset and do the following:
+   - Inject all strings for each datasets from (Task #3)
+   - For ending string inject ~There was ${CountCounter} numbers processed for stream ${stream name}~
+   - Print to the console how long the program took

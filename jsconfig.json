@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "~/*" : ["*"]
+    },
+    "target": "es2017",
+    "module": "es6",
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "checkJs": false
+  },
+  "lib": [
+    "es2017",
+    "dom"
+  ],
+  "typeAcquisition": {
+    "include": []
+  }
+}

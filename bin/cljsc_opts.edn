@@ -1,0 +1,1 @@
+{:output-wrapper false, :externs ["closure-js/externs"], :libs ["src/foreign" "src/streams_vs_channels/streams_example" "closure-js/libs"], :output-to "bin/exec.js", :output-dir "bin", :main streams-vs-channels.core, :target :nodejs, :optimizations :simple, :language-in :ecmascript6}

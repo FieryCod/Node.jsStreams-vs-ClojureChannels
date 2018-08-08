@@ -6,7 +6,7 @@
 
 (def iterations
   "Number of iterations"
-  10000)
+  1000000)
 
 (def padding-len
   "Padding is equal the length of highest possible number during iteration"

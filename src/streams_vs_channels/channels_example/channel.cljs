@@ -1,10 +1,10 @@
 (ns streams-vs-channels.channels-example.channel
   (:require [clojure.core.async :as async]
-            [streams-vs-channels.settings :as settings]
-            [streams-vs-channels.channels-example.reader :as reader]
-            [streams-vs-channels.channels-example.writer :as writer]
-            [streams-vs-channels.channels-example.state :as state]
             [streams-vs-channels.tools :as tools]
+            [streams-vs-channels.reader :as reader]
+            [streams-vs-channels.settings :as settings]
+            [streams-vs-channels.channels-example.state :as state]
+            [streams-vs-channels.channels-example.writer :as writer]
             [streams-vs-channels.channels-example.tasks :refer [select-chan-1
                                                                 group-string-3
                                                                 process-channel-3
@@ -24,7 +24,7 @@
         start-time (system-time)
         counters (state/create-coll-counters)]
 
-     ;; Task #1 #2
+    ;; Task #1 #2
     (reader/read-file settings/seed-filename
                       (fn [num]
                         (apply select-chan-1
@@ -50,5 +50,4 @@
         (doseq [[stream name counter] (map vector streams ["fizz" "buzz" "fizzbuzz" "other"] counters)]
           (write-counter-state-4 stream name counter))
 
-        (println "All datasets processed! Good job!")
-        (println "Program took" (tools/elapsed-time start-time))))))
+        (tools/print-exit-program-msg start-time)))))

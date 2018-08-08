@@ -1,4 +1,4 @@
-(ns streams-vs-channels.channels-example.reader
+(ns streams-vs-channels.reader
   (:require [foreign.node-modules :as nm]
             [streams-vs-channels.settings :as settings]))
 
@@ -6,7 +6,7 @@
   "Read options for readable-stream"
   (clj->js {:encoding "utf8" :highWaterMark settings/bytes-per-write}))
 
-(defn ^:export read-file
+(defn read-file
   "Reads the content of the file"
   [filename on-data-fn on-end-fn]
   (let [readable-stream (.createReadStream nm/fs filename read-seed-options)]

@@ -18,13 +18,23 @@
 
   :cljsbuild
   {:builds
-   {:prod {:source-paths ["src"]
+   {:prod-bin {:source-paths ["src"]
+               :compiler     {:output-to     "bin/exec.js"
+                              :output-dir    "bin"
+                              :main          streams-vs-channels.core
+                              :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
+                              :target        :nodejs
+                              :optimizations :simple
+                              :language-in   :ecmascript6}}
+
+    :prod {:source-paths ["src"]
            :compiler     {:output-to     "target/prod/streams_vs_channels.js"
                           :output-dir    "target/prod"
                           :main          streams-vs-channels.core
-                          :libs          ["src/foreign"]
+                          :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
                           :source-map    "target/prod/streams_vs_channels.js.map"
                           :target        :nodejs
+                          :language-in   :ecmascript6
                           :optimizations :simple}}
 
     :dev {:source-paths ["src"]
@@ -32,7 +42,8 @@
           :compiler     {:output-to     "target/dev/figwheel_exec.js"
                          :output-dir    "target/dev"
                          :main          streams-vs-channels.core
-                         :libs          ["src/foreign"]
+                         :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
                          :target        :nodejs
                          :source-map    true
-                         :optimizations :none}}}})
+                         :optimizations :none
+                         :language-in   :ecmascript6}}}})

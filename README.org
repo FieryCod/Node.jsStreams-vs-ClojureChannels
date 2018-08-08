@@ -58,5 +58,31 @@ The task is to take all numbers from the ~seeds.file~ and process it as follows.
 4. /Create 4 files for dataset and do the following:/ (Task #4)
 
    - Inject all strings for each datasets from (Task #3)
-   - For ending string inject ~There was ${CountCounter} numbers processed for stream ${stream name}~
+   - For ending string inject ~There was ${CountCounter} numbers processed for stream ${stream_name}~
    - Print to the console how long the program took
+
+
+
+** Benchmark
+I've run each option 10 times for 1 000 000 numbers and here are the results:
+
+| Streams (ms) | Channels (ms) |
+|--------------+---------------|
+| 26605.116539 |  28164.848514 |
+| 25203.411413 |  27396.837127 |
+| 24620.778972 |  27092.127704 |
+| 24807.708090 |  27081.614445 |
+| 24309.594895 |  26725.460214 |
+| 24692.114949 |  26583.327855 |
+| 24727.354629 |  26437.005529 |
+| 25258.414988 |  26623.881638 |
+| 24900.780390 |  26476.086182 |
+| 25318.520212 |  26557.018727 |
+
+Whole program took:
+
+|  Streams (ms) | Channels (ms) |
+|---------------+---------------|
+| 250451.349866 | 269150.369399 |
+
+Channels are about 20 sec slower in the benchmark than Streams (about 2-3 seconds slower in each execution than Streams).

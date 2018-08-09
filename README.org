@@ -1,6 +1,9 @@
 * Node.js Streams vs Golang/Clojure Channels
 
-** Prerequisites
+** Quick benchmark check
+   Now the compiled version of a program is available in ~/bin~ directory.
+   Run ~node bin/exec.js~ to check it out :) :rocket: :tada: :rocket:
+** Development & PR's
 1. Install the [[https://leiningen.org/][Leiningen]] via brew:
 
   ~brew install leiningen~
@@ -60,7 +63,6 @@ The task is to take all numbers from the ~seeds.file~ and process it as follows.
    - Inject all strings for each datasets from (Task #3)
    - For ending string inject ~There was ${CountCounter} numbers processed for stream ${stream_name}~
    - Print to the console how long the program took
-
 
 
 ** Benchmark

@@ -1,5 +1,7 @@
 (ns streams-vs-channels.channels-example.tasks
-  (:require [clojure.core.async :as async]))
+  (:require [clojure.core.async :as async]
+            [streams-vs-channels.settings :as settings]
+            [streams-vs-channels.tools :as tools]))
 
 (defn- put-and-count
   "Puts the number onto the chan and updates the counter"
@@ -7,6 +9,15 @@
   (do (async/put! ch n)
       (swap! at inc)
       nil))
+
+(defn create-writeable-streams-1
+  "Returns the writable streams of files fizz, buzz, fizzbuzz and others"
+  []
+  (mapv #(tools/create-writable-stream %)
+        [settings/fizz-filename
+         settings/buzz-filename
+         settings/fizzbuzz-filename
+         settings/others-filename]))
 
 (defn select-chan-1
   "Groups the numbers by fizz-buzz task and counts the numbers inside the channels

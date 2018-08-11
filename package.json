@@ -5,7 +5,7 @@
   "scripts": {
     "fig": "node target/dev/figwheel_exec.js",
     "prod": "node target/prod/streams_vs_channels.js",
-    "clean-resources": "rm -Rf fizz* buzz* others.file seeds.file"
+    "clean-resources": "rm -Rf *.file *.report"
   },
   "devDependencies": {
     "@cljs-oss/module-deps": "^1.1.1",

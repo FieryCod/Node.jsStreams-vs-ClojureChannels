@@ -1,10 +1,11 @@
+
 goog.provide('streams_vs_channels.streams_example.impl')
 
-const EventEmitter = require('events')
-const fs = require('fs')
 
 streams_vs_channels.streams_example.impl = {
   newStreamExample () {
+    const EventEmitter = require('events')
+    const fs = require('fs')
     const EndProcessingEventEmitter = new EventEmitter()
 
     let fizz = []

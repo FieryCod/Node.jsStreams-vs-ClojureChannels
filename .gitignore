@@ -15,3 +15,6 @@ target
 node_modules
 *.log
 *.file
+*.iml
+.idea
+*.report

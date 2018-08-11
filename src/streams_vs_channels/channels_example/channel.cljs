@@ -4,8 +4,8 @@
             [streams-vs-channels.reader :as reader]
             [streams-vs-channels.settings :as settings]
             [streams-vs-channels.channels-example.state :as state]
-            [streams-vs-channels.channels-example.writer :as writer]
-            [streams-vs-channels.channels-example.tasks :refer [select-chan-1
+            [streams-vs-channels.channels-example.tasks :refer [create-writeable-streams-1
+                                                                select-chan-1
                                                                 group-string-3
                                                                 process-channel-3
                                                                 write-counter-state-4]]))
@@ -17,7 +17,7 @@
 
 (defn process-with-channels
   []
-  (let [[fizz-stream buzz-stream fizzbuzz-stream others-stream :as streams] (writer/create-writeable-streams)
+  (let [[fizz-stream buzz-stream fizzbuzz-stream others-stream :as streams] (create-writeable-streams-1)
         [fizz-chan buzz-chan fizzbuzz-chan others-chan :as chans] (create-processing-chans)
         [fizz-group buzz-group fizzbuzz-group] (state/create-group-counters)
 

@@ -1,5 +1,7 @@
 (ns streams-vs-channels.tools
-  (:require [clojure.core.async :as async]))
+  (:require [clojure.core.async :as async]
+            [foreign.CloseProgramEventEmitter :as close-emitter]
+            [foreign.node-modules]))
 
 (defn elapsed-time
   "Taken from cljs.core. Measures the time using the start time"
@@ -17,3 +19,16 @@
   (let [c (async/chan)]
     (.then p #(async/put! c %))
     c))
+
+(defn register-close
+  []
+  (let [close (atom false)]
+    (.on close-emitter/emitter "CloseProgram"
+         (fn []
+           (swap! close (fn [] true))))
+    close))
+
+(defn create-writable-stream
+  "Creates the writable stream using filename passed"
+  [filename]
+  (.createWriteStream foreign.node-modules/fs filename (clj->js {:encoding "utf-8"})))

@@ -1,49 +1,29 @@
 (defproject streams_vs_channels "0.1.0-SNAPSHOT"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.339"]
-                 [figwheel "0.5.16"]
-                 [figwheel-sidecar "0.5.16"]
+                 [com.bhauman/figwheel-main "0.1.8-SNAPSHOT"]
+                 [com.bhauman/rebel-readline-cljs "0.1.4"]
                  [org.clojure/core.async  "0.4.474"]]
 
-  :plugins [[lein-cljsbuild "1.1.7"]
-            [lein-figwheel "0.5.16"]]
+  :plugins [[lein-cljsbuild "1.1.7"]]
 
   :jvm-opts ^:replace ["-Xmx1g" "-server"]
 
-  :clean-targets ^{:protect false} ["target" "seeds.file" "fizz.file" "buzz.file" "fizzbuzz.file" "others.file"]
+  :clean-targets ^{:protect false} ["target"]
 
   :profiles {:dev {:dependencies [[cider/piggieback "0.3.8"]]
                    :repl-options {:nrepl-middleware [cider.piggieback/wrap-cljs-repl]}}}
-  :figwheel {}
+
+  :aliases {"fig" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]}
 
   :cljsbuild
   {:builds
-   {:prod-bin {:source-paths ["src"]
-               :compiler     {:output-to     "bin/exec.js"
-                              :output-dir    "bin"
-                              :main          streams-vs-channels.core
-                              :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
-                              :target        :nodejs
-                              :optimizations :simple
-                              :language-in   :ecmascript6}}
-
-    :prod {:source-paths ["src"]
-           :compiler     {:output-to     "target/prod/streams_vs_channels.js"
-                          :output-dir    "target/prod"
+   {:prod {:source-paths ["src"]
+           :compiler     {:output-to     "bin/exec.js"
+                          :source-map    "bin/exec.js.map"
+                          :output-dir    "bin"
                           :main          streams-vs-channels.core
                           :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
-                          :source-map    "target/prod/streams_vs_channels.js.map"
                           :target        :nodejs
                           :language-in   :ecmascript6
-                          :optimizations :simple}}
-
-    :dev {:source-paths ["src"]
-          :figwheel     true
-          :compiler     {:output-to     "target/dev/figwheel_exec.js"
-                         :output-dir    "target/dev"
-                         :main          streams-vs-channels.core
-                         :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
-                         :target        :nodejs
-                         :source-map    true
-                         :optimizations :none
-                         :language-in   :ecmascript6}}}})
+                          :optimizations :simple}}}})

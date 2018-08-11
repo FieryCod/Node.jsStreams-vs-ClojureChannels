@@ -19,8 +19,8 @@ return cljs.core.println.call(null,"Program took",streams_vs_channels.tools.elap
 streams_vs_channels.tools.promise__GT_chan = (function streams_vs_channels$tools$promise__GT_chan(p){
 var c = cljs.core.async.chan.call(null);
 p.then(((function (c){
-return (function (p1__8425_SHARP_){
-return cljs.core.async.put_BANG_.call(null,c,p1__8425_SHARP_);
+return (function (p1__8439_SHARP_){
+return cljs.core.async.put_BANG_.call(null,c,p1__8439_SHARP_);
 });})(c))
 );
 

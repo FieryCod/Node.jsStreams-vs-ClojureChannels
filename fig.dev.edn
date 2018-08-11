@@ -1,0 +1,8 @@
+{:output-to     "target/dev/figwheel_exec.js"
+ :output-dir    "target/dev"
+ :main          streams-vs-channels.core
+ :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]
+ :target        :nodejs
+ :source-map    true
+ :optimizations :none
+ :language-in   :ecmascript6}

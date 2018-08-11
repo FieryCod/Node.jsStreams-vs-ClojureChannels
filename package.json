@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "fig": "node target/dev/figwheel_exec.js",
-    "prod": "node target/prod/streams_vs_channels.js",
-    "clean-resources": "rm -Rf *.file *.report"
+    "prod": "node bin/exec.js",
+    "clean": "rm -Rf *.file *.report && lein clean"
   },
   "devDependencies": {
     "@cljs-oss/module-deps": "^1.1.1",

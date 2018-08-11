@@ -7,25 +7,32 @@
 
 (defmacro with-monitor
   [name body]
-  `(let [should-close# (streams-vs-channels.tools/register-close)
-         memory-stream# (streams-vs-channels.tools/create-writable-stream (str ~name "_memory.report"))
-         eventloop-stream# (streams-vs-channels.tools/create-writable-stream (str ~name "_eventloop.report"))]
+  `(let [memory-filename# (str ~name "_memory.report")
+         eventloop-filename# (str ~name "_eventloop.report")
+         should-close# (streams-vs-channels.nodejs/register-close)
+         writable-memory-stream# (streams-vs-channels.nodejs/create-writable-stream memory-filename#)
+         writable-eventloop-stream# (streams-vs-channels.nodejs/create-writable-stream eventloop-filename#)]
 
      ~body
 
-     (let [id# (.setInterval foreign.node-modules/timers
-                            (fn []
-                              (if-not @should-close#
-                                (do
-                                  (.write memory-stream#
-                                          (str (/ (.-heapUsed (.memoryUsage js/process)) 1024 1024) "\n"))
+     (let [secs# (atom 1)
+           id# (streams-vs-channels.nodejs/set-interval
+                 (fn []
+                   (if-not @should-close#
+                     (do
+                       (.write writable-memory-stream#
+                               (str (.round js/Math (/ (.-heapUsed (.memoryUsage js/process)) 1024 1024)) " " @secs# "\n"))
 
-                                  (.write eventloop-stream#
-                                          (str (count (._getActiveRequests js/process)) "\n")))
+                       (.write writable-eventloop-stream#
+                               (str (count (._getActiveRequests js/process)) " " @secs# "\n"))
 
-                                (do
-                                  (.end memory-stream#)
-                                  (.end eventloop-stream#))))
-                            1000)]
+                       (swap! secs# inc))
 
-       (.on memory-stream# "close" #(.clearInterval foreign.node-modules/timers id#)))))
+                     (do
+                       (.end writable-memory-stream#)
+                       (.end writable-eventloop-stream#))))
+                 1000)]
+
+       (.on writable-memory-stream# "close"
+            (fn []
+              (streams-vs-channels.nodejs/clear-interval id#))))))

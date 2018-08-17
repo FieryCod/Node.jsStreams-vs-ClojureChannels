@@ -20,7 +20,7 @@
   {:builds
    {:prod {:source-paths ["src"]
            :compiler     {:output-to     "bin/exec.js"
-                          :source-map    "bin/exec.js.map"
+                          :source-map    "bin/exec.map.js"
                           :output-dir    "bin"
                           :main          streams-vs-channels.core
                           :libs          ["src/foreign", "src/streams_vs_channels/streams_example"]

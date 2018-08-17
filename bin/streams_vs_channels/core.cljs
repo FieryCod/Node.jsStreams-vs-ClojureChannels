@@ -11,13 +11,12 @@
                (println "Seed file created!"))
     "channels" (channel-example/process-with-channels)
     "streams"  (stream-example/process-with-streams)
-    "benchmark-channels" (if-let [times (second args)]
-                           (benchmark/run-channels-benchmark times)
-                           (println "Please specify how many times should benchmark run"))
-    "benchmark-streams" (if-let [times (second args)]
-                           (benchmark/run-streams-benchmark times)
-                           (println "Please specify how many times should benchmark run"))
+    "streams-with-transform" (stream-example/process-with-transform-streams)
+    "benchmark-channels" (benchmark/benchmark-runner benchmark/run-channels-benchmark (second args))
+    "benchmark-streams" (benchmark/benchmark-runner benchmark/run-streams-benchmark (second args))
+    "benchmark-streams-with-transform" (benchmark/benchmark-runner benchmark/run-streams-with-transform-benchmark (second args))
+
     (do (println "I do not know what you mean.")
-        (println "Possible options are [seed, channels, streams, benchmark-channels, benchmark-streams]"))))
+        (println "Possible options are [seed, channels, streams, streams-with-transform, benchmark-channels, benchmark-streams, benchmark-streams-with-transform]"))))
 
 (set! *main-cli-fn* -main)

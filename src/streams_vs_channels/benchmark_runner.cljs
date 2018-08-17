@@ -11,42 +11,32 @@
   (println "Preparing the env for benchmarking\n")
   (println "Wait 4 seconds for env warmup"))
 
-(defn run-channels-benchmark
-  "Runs the channels benchmark number of times.
-  We should wait couple of seconds to warm up Clojurescript/Node.js"
-  [times]
+(defn benchmark-runner
+  [benchmark times]
+  (if times
+    (benchmark times)
+    (println "Please specify how many times should benchmark run")))
 
-  (welcome-str)
+(defn setup-benchmark
+  [name process-fn]
+  (fn [times]
+    (welcome-str)
 
-  (with-monitor "channels"
-    (with-timeout
-      (let [start-time (system-time)]
-        (async/go
-          (loop [i 0]
-            (when (< i times)
-              (async/<! (channel-example/process-with-channels))
-              (println "\n")
-              (recur (inc i))))
+    (with-monitor name
+      (with-timeout
+        (let [start-time (system-time)]
+          (async/go
+            (loop [i 0]
+              (when (< i times)
+                (async/<! (process-fn))
+                (println "\n")
+                (recur (inc i))))
 
-          (println "Benchmark took" (tools/elapsed-time start-time) "ms ;)\n")
-          (.emit close-emitter/emitter "CloseProgram"))))))
+            (println "Benchmark took" (tools/elapsed-time start-time) "ms ;)\n")
+            (.emit close-emitter/emitter "CloseProgram")))))))
 
-(defn run-streams-benchmark
-  "Runs the streams benchmark number of times.
-  We should wait couple of seconds to warm up Clojurescript/Node.js"
-  [times]
+(def run-channels-benchmark (setup-benchmark "channels" #(channel-example/process-with-channels)))
 
-  (welcome-str)
+(def run-streams-benchmark (setup-benchmark "streams" #(tools/promise->chan (stream-example/process-with-streams))))
 
-  (with-monitor "streams"
-    (with-timeout
-      (let [start-time (system-time)]
-        (async/go
-          (loop [i 0]
-            (when (< i times)
-              (async/<! (tools/promise->chan (stream-example/process-with-streams)))
-              (println "\n")
-              (recur (inc i))))
-
-          (println "Benchmark took" (tools/elapsed-time start-time) "ms ;)\n")
-          (.emit close-emitter/emitter "CloseProgram"))))))
+(def run-streams-with-transform-benchmark (setup-benchmark "streams-with-transform" #(tools/promise->chan (stream-example/process-with-transform-streams))))

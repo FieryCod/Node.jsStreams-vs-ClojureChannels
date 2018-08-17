@@ -1,5 +1,7 @@
 (ns streams-vs-channels.tools
-  (:require [clojure.core.async :as async]))
+  (:require [clojure.core.async :as async]
+            [streams-vs-channels.settings :as settings]
+            [streams-vs-channels.nodejs]))
 
 (defn elapsed-time
   "Taken from cljs.core. Measures the time using the start time"
@@ -17,3 +19,12 @@
   (let [c (async/chan)]
     (.then p #(async/put! c %))
     c))
+
+(defn create-writeable-streams
+  "Returns the writable streams of files fizz, buzz, fizzbuzz and others"
+  []
+  (mapv #(streams-vs-channels.nodejs/create-writable-stream %)
+        [settings/fizz-filename
+         settings/buzz-filename
+         settings/fizzbuzz-filename
+         settings/others-filename]))

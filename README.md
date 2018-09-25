@@ -6,8 +6,7 @@
 - [Benchmark](#org22f1157)
 - [Memory usage](#org37133312)
 - [Event loop](#org37133313)
-- [Pros & Cons](#org31233122)
-- [Who wins? Rationale](#org223123123)
+- [Summary](#org31233122)
 
 <a id="org372ec54"></a>
 
@@ -165,7 +164,7 @@ Channels always got 2 more requests to event loop then streams. In my opinion th
 
 <a id="org31233122"></a>
 
-## Pros & Cons
+## Summary
 
 ### Streams & Streams with transform
 
@@ -190,7 +189,4 @@ Channels always got 2 more requests to event loop then streams. In my opinion th
 | Quite clean, FP code therefore easier to mantain and extend |                                                        |
 | Easy to test every single transformation                    |                                                        |
 
-In my opinion the CLJS code is easier to mantain, extend and what is crucial the logic is not coupled with the source of data.
-In section below I will try to explain what I mean by "coupled with the source".
 
-<a id="org223123123"></a>
